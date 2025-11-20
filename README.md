@@ -2,7 +2,7 @@
 
 Go 代码混淆工具，使用 AST 技术实现跨文件代码混淆，保证混淆后代码**可编译和可执行**。
 
-[English][url-docen] | [完整文档](README_FULL.md)
+[English][url-docen]
 
 ## 核心特性
 
