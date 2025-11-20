@@ -873,11 +873,14 @@ func (o *Obfuscator) obfuscateFile(filePath string) error {
 		hadEncryption := o.encryptStringsInAST(node)
 
 		if hadEncryption {
-			// 确保导入解密包
-			source = o.ensureDecryptPackageImport(source)
+			// 先加密字符串字面量（使用解密包的函数）
+			var actuallyEncrypted bool
+			source, actuallyEncrypted = o.encryptStringsInSourceWithPackage(source)
 			
-			// 加密字符串字面量（使用解密包的函数）
-			source, _ = o.encryptStringsInSourceWithPackage(source)
+			// 只有在真正加密了字符串时才添加解密包导入
+			if actuallyEncrypted {
+				source = o.ensureDecryptPackageImport(source)
+			}
 		}
 	}
 
@@ -959,11 +962,14 @@ func (o *Obfuscator) obfuscateFileWithMapping(filePath string, fileMapping map[s
 		hadEncryption := o.encryptStringsInAST(node)
 
 		if hadEncryption {
-			// 确保导入解密包
-			source = o.ensureDecryptPackageImport(source)
+			// 先加密字符串字面量（使用解密包的函数）
+			var actuallyEncrypted bool
+			source, actuallyEncrypted = o.encryptStringsInSourceWithPackage(source)
 			
-			// 加密字符串字面量（使用解密包的函数）
-			source, _ = o.encryptStringsInSourceWithPackage(source)
+			// 只有在真正加密了字符串时才添加解密包导入
+			if actuallyEncrypted {
+				source = o.ensureDecryptPackageImport(source)
+			}
 		}
 	}
 
